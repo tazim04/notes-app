@@ -14,7 +14,7 @@ def register():
     data = request.get_json() # convert request data to json
     hashed_password = generate_password_hash(data['password']) # hash password for db
     new_user = User(username=data['username'], password=hashed_password) # create new user with user model
-    db.session.add(new_user)
+    db.session.add(new_user) # table is automatically picked based on the model class used (User table)
     db.session.commit()
     return jsonify({"message": f"{new_user.username} registered!"}), 201
 
@@ -22,6 +22,7 @@ def register():
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(f"data: {data}")
     user = User.query.filter_by(username=data['username']).first()
     if not user or not check_password_hash(user.password, data['password']):
         return jsonify({"message": "Invalid username or password!"}), 401

@@ -1,32 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Header from "./components/Header"; // Adjust the path as needed
+import { AuthProvider } from "./contexts/AuthContext";
+
+import { NavigationContainer } from "@react-navigation/native";
+import AppNavigator from "./navigation/AppNavigator";
+
+import LogInScreen from "./screens/LogInScreen";
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <Header title="Notes" />
-
-      {/* Content */}
-      <View style={styles.content}>
-        <Text>Welcome to the Notes App!</Text>
-      </View>
-    </View>
+    <AuthProvider>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, // Ensures the container fills the full screen
-    backgroundColor: "#1a1b1a",
-  },
-  content: {
-    marginTop: 60, // Account for the height of the header
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default App;

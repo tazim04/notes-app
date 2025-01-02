@@ -4,18 +4,22 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
+import os
 
 db = SQLAlchemy()
 jwt = JWTManager()
 
 def create_app():
+    load_dotenv()
+    
     app = Flask(__name__)
     CORS(app)
 
     # app configuration
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///notes.db'
-    app.config['SECRET_KEY'] = 'your-secret-key'
-    app.config['JWT_SECRET_KEY'] = 'your-jwt-secret-key' # for jwt signing
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default-secret-key')
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'default-jwt-secret-key') # for jwt signing
 
     # Initialize db and jwt
     db.init_app(app)
