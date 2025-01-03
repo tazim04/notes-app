@@ -24,7 +24,6 @@ const LogInScreen = ({ navigation }: any) => {
     try {
       const token = await loginUser(username, password); // call login api
       login(); // update authentication state to swtich to MainNavigator
-      navigation.navigate("NotesList"); // navigate to main app
     } catch (error: any) {
       console.error(error);
     }
